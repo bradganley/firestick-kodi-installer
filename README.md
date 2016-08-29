@@ -35,8 +35,7 @@ myiface = 'eth0'
 
 ### Todos
 
- - Add NMAP Check
- - Add ADB Check
- - Add Code Comments
+ - Add Detailed Code Comments
+
 
 

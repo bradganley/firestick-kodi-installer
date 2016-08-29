@@ -8,14 +8,19 @@ import subprocess #hopefully this does away with the os shit
 
 myiface = 'enp0s5'
 
-#converts subnet mask to slash notation (found online).
+#Converts subnet mask to slash notation (found online).
 def get_net_size(netmask):
     binary_str = ''
     for octet in netmask:
         binary_str += bin(int(octet))[2:].zfill(8)
     return str(len(binary_str.rstrip('0')))
 
-#defining the function that actually installs kodi
+#Function to check for programs we need.
+def cmd_exists(cmd):
+    return subprocess.call("type " + cmd, shell=True, 
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+
+#Defining the function that actually installs kodi
 def installkodi(addy):
 	raw_input('\nOk, here we go. This will probably take a minute...\n\n\nPRESS ENTER\n')
 	subprocess.call('adb kill-server',shell=True)
@@ -42,7 +47,7 @@ def getfireip():
 	cidr=get_net_size(netmask.split('.'))
 
 	#Find firestick and return ip.
-	findfire=subprocess.check_output('nmap -sS -p8008 '+address+'/'+cidr+' | grep -B 4 Amazon | cut -d " " -f 5 | head -n 1', shell=True)
+	findfire=subprocess.check_output('nmap -sS -p8008 --open '+address+'/'+cidr+' | grep -B 4 Amazon | cut -d " " -f 5 | head -n 1', shell=True)
 	print '\nLooks like your firestick IP is '+findfire.rstrip()+'. Does that seem right? \n\nDon\'t care. \n\nWe\'re going for it\n\n'
 	return str(findfire.rstrip())
 
@@ -61,6 +66,10 @@ def main():
 		""")
 		ans=raw_input("What would you like to do? \n") 
 		if ans=="1": 
+			#Check if nmap is installed before running autoinstall.
+			if cmd_exists("nmap") == True:
+				exit('\nAuto install requires nmap to be installed, install, and try again.\n')
+			
 			#If automatic install tell the user and try to grab ip and pass to installkodi.		
 			print("\nTrying autoinstall (noob friendly)...\n")
 			getkodi()
@@ -83,6 +92,10 @@ def main():
 
 #Check if script is run as root, or sudo root, else exit.
 if not os.geteuid() == 0:
-	exit('Script must be run as root')
+	exit('Script must be run as root or with sudo command.')
+
+#Check if ADB is installed.
+if cmd_exists("adb") == False:
+	exit('\nADB is required for both install options, please install before running.\n')
 
 main()
