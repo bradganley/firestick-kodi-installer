@@ -8,6 +8,10 @@ import subprocess #hopefully this does away with the os shit
 
 myiface = 'enp0s5'
 
+#Check if script is run as root, or sudo root, else die.
+if not os.geteuid() == 0:
+    sys.exit('Script must be run as root')
+
 #converts subnet mask to slash notation (found online).
 def get_net_size(netmask):
     binary_str = ''
