@@ -35,14 +35,13 @@ def getfireip():
 	print("\nBe patient as we try to locate the firestick on your network...\n")
 	
 	#Get machine ip and netmask to know network to search.	
-	
 	addrs = netifaces.ifaddresses(myiface)
-
 	ipinfo = addrs[socket.AF_INET][0]
 	address = ipinfo['addr']
 	netmask = ipinfo['netmask']
 	cidr=get_net_size(netmask.split('.'))
 
+	#Find firestick and return ip.
 	findfire=subprocess.check_output('nmap -sS -p8008 '+address+'/'+cidr+' | grep -B 4 Amazon | cut -d " " -f 5 | head -n 1', shell=True)
 	print '\nLooks like your firestick IP is '+findfire.rstrip()+'. Does that seem right? \n\nDon\'t care. \n\nWe\'re going for it\n\n'
 	return str(findfire.rstrip())
@@ -82,7 +81,7 @@ def main():
 			#Message for options outside what we defined.
 			print("\nMmmm we gave you your options...\n") 
 
-#Check if script is run as root, or sudo root, else die.
+#Check if script is run as root, or sudo root, else exit.
 if not os.geteuid() == 0:
 	exit('Script must be run as root')
 
