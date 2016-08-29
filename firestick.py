@@ -8,10 +8,6 @@ import subprocess #hopefully this does away with the os shit
 
 myiface = 'enp0s5'
 
-#Check if script is run as root, or sudo root, else die.
-if not os.geteuid() == 0:
-    sys.exit('Script must be run as root')
-
 #converts subnet mask to slash notation (found online).
 def get_net_size(netmask):
     binary_str = ''
@@ -54,6 +50,7 @@ def getfireip():
 
 #Begin running program and display options to end users.
 def main():
+
 	print('Welcome to the program that will fuck up your Firestick!')
 
 	ans=True
@@ -84,5 +81,9 @@ def main():
 		else:
 			#Message for options outside what we defined.
 			print("\nMmmm we gave you your options...\n") 
+
+#Check if script is run as root, or sudo root, else die.
+if not os.geteuid() == 0:
+	exit('Script must be run as root')
 
 main()
