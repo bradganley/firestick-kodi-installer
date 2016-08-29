@@ -4,5 +4,7 @@ Find the IP of a firestick on the network, optionally download the apk, and wire
 Requirements for Auto Install:
 
 nmap
+
 edit the following line (9) with your interface name:
+
 myiface = 'enp0s5' eg. 'eth0' 
