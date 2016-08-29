@@ -67,7 +67,7 @@ def main():
 		ans=raw_input("What would you like to do? \n") 
 		if ans=="1": 
 			#Check if nmap is installed before running autoinstall.
-			if cmd_exists("nmap") == True:
+			if cmd_exists("nmap") == False:
 				exit('\nAuto install requires nmap to be installed, install, and try again.\n')
 			
 			#If automatic install tell the user and try to grab ip and pass to installkodi.		
