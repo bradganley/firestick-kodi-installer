@@ -17,6 +17,7 @@ Install the dependencies:
 
 ```
 Install adb from package manager or from source.
+(apt-get install android-tools-adb android-tools-fastboot on ubuntu/debian based linux distros)[We may add this to checks/auto-installs later. Who knows? We're sexy and ready to party.]
 ```
 
 Auto Install Dependencies:
