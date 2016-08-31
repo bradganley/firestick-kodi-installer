@@ -4,7 +4,7 @@ import sys # for auto ip stuff
 import socket #more ip stuff
 import netifaces # "" 
 import urllib #attempting to just get the live file
-import subprocess #hopefully this does away with the os shit
+import subprocess #easily the most important import here lol
 
 
 #Converts subnet mask to slash notation (found online).
@@ -150,6 +150,8 @@ def main():
 			#Message for users who exit install.		
 			print("\nPsh we didn't want you running this anyway!\n")
 			exit()
+		elif ans=='6':
+			print("\nWhat even were you thinking? Seriously, like....why did you press that button? \nWhat even...God, you know? This is just like you. \nYou're always pulling this shit. You had simple intructions. Like way too simple. \nIt's like five options but here you are. Just flaunting your free will like some sort of cosmically appointed asshole. For real, why are you even here? \nDo you even have a Fire stick? Do you have friends? UGH\n")
 		else:
 			#Message for options outside what we defined.
 			print("\nMmmm we gave you your options...\n") 
