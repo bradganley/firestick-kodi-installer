@@ -27,12 +27,28 @@ def installkodi(addy):
 	subprocess.call('adb install kodi.apk',shell=True)
 	raw_input('\n\n\nProvided no errors happened there, you should be good to go. Have a good one.\n\n\nPlease press enter to close the program\n')
 
+#Defining the function that actually installs SPMC (I'm lazily copy/pasting the comments, too. God I'm cute)
+def installspmc(addy):
+	raw_input('\nOk, here we go. This will probably take a minute...\n\n\nPRESS ENTER\n')
+	subprocess.call('adb kill-server',shell=True)
+	subprocess.call('adb connect '+addy,shell=True)
+	subprocess.call('adb install spmc.apk',shell=True)
+	raw_input('\n\n\nProvided no errors happened there, you should be good to go. Have a good one.\n\n\nPlease press enter to close the program\n')
+
 #Function to download kodi if needed.
 def getkodi():
 	#If kodi.apk doesn't exist, download it.	
 	if not os.path.isfile('kodi.apk'):
 		print('\nattempting a thing...\n')
 		urllib.urlretrieve('http://mirrors.kodi.tv/releases/android/arm/kodi-16.1-Jarvis-armeabi-v7a.apk','kodi.apk')
+
+#Function to download kodi if needed.
+def getspmc():
+	#If spmc.apk doesn't exist, download it.	
+	if not os.path.isfile('spmc.apk'):
+		print('\nattempting a thing...\n')
+		urllib.urlretrieve('https://github.com/koying/SPMC/releases/download/16.4.2-spmc/SPMC-armeabi-v7a_16.4.2.apk  ','spmc.apk')
+
 
 #Try to get the IP for automatic install.
 def getfireip():
@@ -48,7 +64,7 @@ def getfireip():
 	cidr=get_net_size(netmask.split('.'))
 
 	#Find firestick and return ip.
-	findfire_raw = subprocess.check_output('nmap -sS -p8008 --open '+address+'/'+cidr+' | grep -B 4 Amazon | cut -d " " -f 5 | head -n 1', shell=True)
+	findfire_raw = subprocess.check_output('nmap -sS -p8008 --open 192.168.1.0/24 | grep -B 4 \'Amazon\|kindle\' | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'', shell=True)
 	findfire = findfire_raw.rstrip()
 	networks = ['172.16', '192.168', '10.']
 	if any(needle in findfire for needle in networks):
@@ -67,6 +83,15 @@ def maninstall():
 	installkodi(ipaddr)
 	exit()
 
+#Manual install function for SPMC
+def maninstallspmc():
+	#If manual install ask user for ip, pass to installkodi.		
+	print("\nRunning in manual mode (advanced users)...\n") 
+	ipaddr = raw_input('\nWhat is the ip address of your firestick?\n')		
+	getspmc()		
+	installspmc(ipaddr)
+	exit()
+
 #Auto install function
 def autoinstall():
 	#Check if nmap is installed before running autoinstall.
@@ -77,6 +102,18 @@ def autoinstall():
 	print("\nTrying autoinstall (noob friendly)...\n")
 	getkodi()
 	installkodi(getfireip())
+	exit()
+	
+#Auto install function for SPMC (alternate version of kodi)	
+def autoinstallspmc():
+	#Check if nmap is installed before running autoinstall.
+	if cmd_exists("nmap") == False:
+		exit('\nAuto install requires nmap to be installed, install, and try again.\n')
+			
+	#If automatic install tell the user and try to grab ip and pass to installkodi.		
+	print("\nTrying autoinstall (noob friendly)...\n")
+	getspmc()
+	installspmc(getfireip())
 	exit()
 
 #Begin running program and display options to end users.
@@ -94,9 +131,11 @@ def main():
 	ans=True
 	while ans:
 		print ("""
-		1.) Automatic Install
-		2.) Manual Install
-		3.) Exit
+		1.) Automatic Install (Kodi)
+		2.) Manual Install (Kodi)
+		3.) Automatic Install (SPMC)
+		4.) Manual Install (SPMC)
+		5.) Exit
 		""")
 		ans=raw_input("What would you like to do? \n") 
 		if ans=="1": 
@@ -104,6 +143,10 @@ def main():
 		elif ans=="2":
 			maninstall()
 		elif ans=="3":
+			autoinstallspmc()
+		elif ans=="4":
+			maninstallspmc()
+		elif ans=="5":
 			#Message for users who exit install.		
 			print("\nPsh we didn't want you running this anyway!\n")
 			exit()
