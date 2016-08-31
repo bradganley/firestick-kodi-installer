@@ -24,14 +24,6 @@ Auto Install Dependencies:
 ```
 Install adb, and nmap from package manager or from source. 
 ```
-Edit the following line (9) with your interface name:
-```
-myiface = 'enp0s5'
-```
-eg. (eth0)
-```
-myiface = 'eth0'
-```
 
 ### Todos
 
