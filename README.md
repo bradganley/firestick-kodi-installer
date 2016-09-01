@@ -30,9 +30,11 @@ Install adb, and nmap from package manager or from source.
 ```
 ### Instructions
 
+```
 1.) Download the script.
 2.) Make sure dependencies from above are installed.
 3.) Run the script and select the option you would like.
+```
 
 ### Todos
 
