@@ -65,7 +65,7 @@ def getfireip():
 
 	#Find firestick and return ip.
 	findfire_raw = subprocess.check_output('nmap -sS -p8008 --open '+address+'/'+cidr+' | grep -B 4 \'Amazon\|kindle\' | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'', shell=True)
-	#findfire = findfire_raw.rstrip()
+	findfire = findfire_raw.rstrip()
 	networks = ['172.16', '192.168', '10.']
 	if any(needle in findfire for needle in networks):
 		print('\nLooks like your firestick IP is '+findfire+'. Does that seem right? \n\nDon\'t care. \n\nWe\'re going for it\n\n')
