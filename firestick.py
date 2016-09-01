@@ -64,12 +64,12 @@ def getfireip():
 	cidr=get_net_size(netmask.split('.'))
 
 	#Find firestick and return ip.
-	findfire_raw = subprocess.check_output('nmap -sS -p8008 --open 192.168.1.0/24 | grep -B 4 \'Amazon\|kindle\' | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'', shell=True)
+	findfire_raw = subprocess.check_output('nmap -sS -p8008 --open '+address+'/'+cidr+' | grep -B 4 \'Amazon\|kindle\' | grep -o \'[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\'', shell=True)
 	#findfire = findfire_raw.rstrip()
 	networks = ['172.16', '192.168', '10.']
-	if any(needle in findfire_raw for needle in networks):
-		print('\nLooks like your firestick IP is '+findfire_raw+'. Does that seem right? \n\nDon\'t care. \n\nWe\'re going for it\n\n')
-		return str(findfire_raw)
+	if any(needle in findfire for needle in networks):
+		print('\nLooks like your firestick IP is '+findfire+'. Does that seem right? \n\nDon\'t care. \n\nWe\'re going for it\n\n')
+		return str(findfire)
 	else:
 		print('\nHmmm yeah we couldn\'t find your firestick..is it connected? Are you connected to a private network?\n\nOh well switching to manual mode...\n\n')
 		maninstall()
