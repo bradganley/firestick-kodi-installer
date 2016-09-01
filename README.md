@@ -40,6 +40,6 @@ Install adb, and nmap from package manager or from source.
 
  - Add Detailed Code Comments
  - Check for and help install dependencies?
- - Change multi install option to a switch in download and variable to minimize code
+ - Change multi-install option to a switch in download and variable to minimize code
 
 
