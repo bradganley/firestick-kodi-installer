@@ -17,13 +17,13 @@ Install the dependencies:
 
 ```
 Install adb from package manager or from source.
-(apt-get install android-tools-adb android-tools-fastboot on ubuntu/debian based linux distros)[We may add this to checks/auto-installs later. Who knows? We're sexy and ready to party.]
 ```
+(apt-get install android-tools-adb android-tools-fastboot on ubuntu/debian based linux distros)[We may add this to checks/auto-installs later. Who knows? We're sexy and ready to party.]
+
 
 Auto Install Dependencies:
-```
+
 Install [netifaces library](https://pypi.python.org/pypi/netifaces#downloads) for python.
-```
 
 ```
 Install adb, and nmap from package manager or from source. 
